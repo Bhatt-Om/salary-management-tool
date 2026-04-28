@@ -1,0 +1,12 @@
+<h1 class="text-xl font-bold mb-4">Employees</h1>
+
+<%= link_to "New Employee", new_employee_path, data: { turbo_frame: "employee_form" } %>
+
+<%= turbo_frame_tag "employee_form" do %>
+<% end %>
+
+<hr class="my-4">
+
+<%= turbo_frame_tag "employees_list" do %>
+  <%= render @employees %>
+<% end %>

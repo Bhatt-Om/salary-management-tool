@@ -1,0 +1,28 @@
+<%= form_with model: employee, local: false do |f| %>  
+  <div>
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
+  </div>
+
+  <div>
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
+  </div>
+
+  <div>
+    <%= f.label :job_title %>
+    <%= f.text_field :job_title %>
+  </div>
+
+  <div>
+    <%= f.label :country %>
+    <%= f.text_field :country %>
+  </div>
+
+  <div>
+    <%= f.label :salary %>
+    <%= f.number_field :salary %>
+  </div>
+
+  <%= f.submit "Create Employee" %>
+<% end %>
