@@ -22,13 +22,10 @@ RSpec.describe SalaryInsightsService do
       Employee.create!( first_name: "Jane", last_name: "Smith", job_title: "Developer", salary: 70000, country: "India")
       Employee.create!( first_name: "Alice", last_name: "Johnson", job_title: "Developer", salary: 60000, country: "USA")
 
-      result = described_class.avg_salary_by_job_title
+      result = described_class.avg_salary_by_job_title("India")
 
-      engineer_data = result.find { |data| data[:job_title] == "Engineer" }
-      expect(engineer_data[:average_salary]).to eq(50000)
-
-      developer_data = result.find { |data| data[:job_title] == "Developer" }
-      expect(developer_data[:average_salary]).to eq(65000.0)
+      expect(result["Engineer"]).to eq(50000.0)
+      expect(result["Developer"]).to eq(70000.0)
     end
   end
 end

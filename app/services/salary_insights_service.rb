@@ -1,25 +1,26 @@
 class SalaryInsightsService
   def self.by_country
-    Employee.group(:country).select(
-      "country, MIN(salary) AS min_salary, MAX(salary) AS max_salary, AVG(salary) AS average_salary"
-    ).map do |record|
+    Employee.group(:country).pluck(:country, *salary_stats_sql).map do | country, min, max, avg |
       {
-        country: record.country,
-        min_salary: record.min_salary.to_i,
-        max_salary: record.max_salary.to_i,
-        average_salary: record.average_salary.to_f
+        country: country,
+        min_salary: min.to_i,
+        max_salary: max.to_i,
+        average_salary: avg.to_f
       }
     end
   end
 
-  def self.avg_salary_by_job_title
-    Employee.group(:job_title).select(
-      "job_title, AVG(salary) AS average_salary"
-    ).map do |record|
-      {
-        job_title: record.job_title,
-        average_salary: record.average_salary.to_f
-      }
-    end
+  def self.avg_salary_by_job_title(country)
+    Employee.where(country: country).group(:job_title).average(:salary).transform_values(&:to_f)
+  end
+
+  private
+
+  def self.salary_stats_sql
+    [
+      Arel.sql("MIN(salary)"),
+      Arel.sql("MAX(salary)"),
+      Arel.sql("AVG(salary)")
+    ]
   end
 end
