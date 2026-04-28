@@ -11,7 +11,12 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(employee_params)
     if @employee.save
-      redirect_to employees_path, notice: "Employee was successfully created"
+      @employees = Employee.all
+
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to employees_path, notice: "Employee was successfully created" }
+      end
     else
       @employees = Employee.all
       render :index, status: :unprocessable_entity

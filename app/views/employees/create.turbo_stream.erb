@@ -1,0 +1,11 @@
+<%= turbo_stream.prepend "employees_list" do %>
+  <%= render @employee %>
+<% end %>
+
+<%= turbo_stream.replace "employee_form" do %>
+  <%= render "form", employee: Employee.new %>
+<% end %>
+
+<%= turbo_stream.prepend "flash" do %>
+  <p class="text-green-600">Employee was successfully created</p>
+<% end %>

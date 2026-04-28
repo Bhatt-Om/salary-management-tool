@@ -23,10 +23,11 @@
   </head>
 
   <body>
-    <% if notice %>
-      <p class="text-green-600"><%= notice %></p>
+    <%= turbo_frame_tag "flash" do %>
+      <% flash.each do |key, message| %>
+      <p class="text-green-600"><%= message %></p>
+      <% end %>
     <% end %>
-
     <% if alert %>
       <p class="text-red-600"><%= alert %></p>
     <% end %>
